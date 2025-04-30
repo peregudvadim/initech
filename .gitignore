@@ -1,6 +1,17 @@
+# Игнорировать папку webapp
+webapp/
+
 # IntelliJ IDEA
 .idea/
 *.iml
 
-# Apache Maven
+# Системные файлы
+.DS_Store
+Thumbs.db
+
+# Журналы и временные файлы
+*.log
+*.tmp
+
+# Maven output
 target/
