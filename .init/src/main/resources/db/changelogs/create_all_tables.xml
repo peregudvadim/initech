@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+
+    <changeSet id="1" author="peregud">
+        <createTable tableName="employees">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department" type="VARCHAR(100)"/>
+            <column name="phone_number" type="VARCHAR(15)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="date_of_birth" type="DATE"/>
+            <column name="hire_date" type="DATE"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="2" author="peregud">
+        <createTable tableName="contracts">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="contract_number" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="3" author="peregud">
+        <createTable tableName="clients">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="client_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_person" type="VARCHAR(100)"/>
+            <column name="phone_number" type="VARCHAR(15)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="industry" type="VARCHAR(100)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet id="4" author="peregud">
+        <createTable tableName="invoices">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="invoice_number" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contract_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="invoice_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="due_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="invoices"
+                baseColumnNames="contract_id"
+                constraintName="fk_invoice_contract"
+                referencedTableName="contracts"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+
+    <changeSet id="5" author="peregud">
+        <createTable tableName="payments">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="invoice_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_method" type="VARCHAR(50)"/>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="payments"
+                baseColumnNames="invoice_id"
+                constraintName="fk_payment_invoice"
+                referencedTableName="invoices"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+
+    <changeSet id="6" author="peregud">
+        <createTable tableName="departments">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="department_name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manager_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="departments"
+                baseColumnNames="manager_id"
+                constraintName="fk_department_manager"
+                referencedTableName="employees"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+
+    <changeSet id="7" author="peregud">
+        <createTable tableName="transactions">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="payment_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transaction_status" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="transactions"
+                baseColumnNames="payment_id"
+                constraintName="fk_transaction_payment"
+                referencedTableName="payments"
+                referencedColumnNames="id"
+                onDelete="CASCADE"/>
+    </changeSet>
+
+
+    <changeSet id="8" author="peregud">
+        <createTable tableName="users">
+            <column name="id" type="SERIAL">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="firstname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

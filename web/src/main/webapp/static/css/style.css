@@ -1,0 +1,93 @@
+@import "../css/bootstrap.min.css";
+
+.navbar {
+    background-color: #332464
+}
+
+.employee_photo {
+    background-color: #fff;
+    border: 2px solid #332464;
+    border-radius: 0.25rem;
+    max-width: 100%;
+    width: 175px;
+    height: 225px;
+}
+
+.col-view-one-employee {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.caption_title {
+    text-align: center;
+    font-family: var(--bs-font-sans-serif);
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+
+.for_top_margin {
+    margin-top: 20px;
+}
+
+.page-link {
+    color: black;
+}
+
+.col-table-title {
+    width: 60%;
+    text-align: center;
+    font-family: var(--bs-font-sans-serif);
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+}
+
+.col-table-button {
+    width: 20%;
+    text-align: right;
+}
+
+.table-title-admin {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/*меняет цвет при наведении курсора*/
+/*tbody tr:hover {
+    background: #eaeaea;
+}*/
+
+.selected {
+    background: #332464; /* Цвет фона при наведении */
+    color: #ffffff;
+}
+
+.btn-primary {
+    color: black;
+    border-color: #332464;
+    background-color: white;
+}
+
+.btn-primary:hover {
+    background: #332464;
+    color: #ffffff;
+}
+
+.page-link:hover {
+    background: #332464;
+    color: #ffffff;
+}
+
+.text-xl-center {
+    margin-top: 30px;
+}
+
+.active a { /* Цвет активной пагинации */
+    background: #332464 !important;
+    color: #ffffff !important;
+}
+
+.text-link {
+    color: #332464;
+}
